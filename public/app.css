@@ -1,0 +1,25 @@
+body {
+    display:flex;
+    align-items: center ;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+}
+
+h1 {
+    font-size: 3em;
+}
+h2{
+    font-size: 2em;
+}
+i.wi {
+    font-size: 3em;
+    line-height: 3em;
+}
+
+.tooltip{
+    display:none;
+}
