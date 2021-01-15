@@ -16,35 +16,35 @@ const weatherIcons = {
  */
 
 
+/**
+ *
+ * @param {boolean} withIp indique si on va procèder en se basant sur l'ip de l'utilisateur ou sur le nom de la ville
+ */
+async function getMeteoInfos(withIp = true) {
+    /**
+     * Si withIp = true
+     * on va chercher lip de l'utilisatuer et selon l'ip on deduira la ville puis on va afficher la meteo
+     * SINON
+     * on prend le contenut de span ville et on travaille avec  cette valeur
+     */
 
-async function getMeteoInfos() {
-    //savoir l'addresse IP de visiteur
-    // const ip = await fetch("http://api.ipify.org/?format=json").then(result => result.json())
-    //     .then(data => data.ip)
-    //     .catch(error => console.log(error))
+    let weather, currentCity, openweatherURL
+    if (withIp) {
 
+         currentCity = await fetch(`http://ipinfo.io/?token=9218caedcca17b`)
+            .then(result => result.json())
+            .then(data => {
+                return { city: data.city, loc: data.loc } // on retourne un obj au lieu d'un item
+            })
+            .catch(error => console.log(error))
 
-    const currentCity = await fetch(`http://ipinfo.io/?token=9218caedcca17b`)
-        .then(result => result.json())
-        .then(data => {
-            return { city: data.city, loc: data.loc } // on retourne un obj au lieu d'un item
-        })
-        .catch(error => console.log(error))
+        const commaPosition = currentCity.loc.indexOf(',')  // position de , dans la chaine
+        const lon = currentCity.loc.substring(0, commaPosition)
+        const lat = currentCity.loc.substring(commaPosition + 1, currentCity.loc.length)
 
-    // console.log(currentCity.city)
+         openweatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lon}&lon=${lat}&appid=${openweatherKey}&lang=fr&units=metric`
 
-    // console.log(currentCity.loc)
-    const commaPosition = currentCity.loc.indexOf(',')  // position de , dans la chaine
-    const lon = currentCity.loc.substring(0, commaPosition)
-    const lat = currentCity.loc.substring(commaPosition+1, currentCity.loc.length )
-    // console.log(commaPosition)
-    console.log('current city local:', currentCity.loc)
-    console.log('lon ' + lon)
-    console.log('lat ' + lat)
-    const openweatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lon}&lon=${lat}&appid=${openweatherKey}&lang=fr&units=metric`
-    // console.log(openweatherURL)
-
-    const weather = await fetch(openweatherURL)
+         weather = await fetch(openweatherURL)
         .then(result => result.json())
         .then(data => {
             return {
@@ -59,16 +59,44 @@ async function getMeteoInfos() {
             }
         })
         .catch(error => console.log(error))
-        displayMeteoInfos(weather)
+    }
+    else {
+
+        //recuperer la ville depuis la span city
+        currentCity= document.querySelector('#city').textContent
+
+        openweatherURL=`http://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=${openweatherKey}&lang=fr&units=metric`
+
+        weather = await fetch(openweatherURL)
+       .then(result => result.json())
+       .then(data => {
+           return {
+               description: data.weather[0].description,
+               main: data.weather[0].main,
+               temp: data.main.temp,
+               city: data.name,
+               meteo: {
+                   data
+               }
+
+           }
+       })
+       .catch(error => console.log(error))
+
+    }
+
+    displayMeteoInfos(weather)
 }
 
 let displayMeteoInfos = (meteo) => {
     // if (!(meteo instanceof Object)) throw 'Param must be an Object';
-    document.querySelector('#city').textContent= meteo.city
-    document.querySelector('#temperature').textContent= meteo.temp
-    document.querySelector('#description').textContent= meteo.description
+    document.querySelector('#city').textContent = meteo.city
+    document.querySelector('#temperature').textContent = meteo.temp
+    document.querySelector('#description').textContent = meteo.description
     document.querySelector('i.wi').className = weatherIcons[meteo.main]
-    console.log( meteo.meteo)
+    document.querySelector('body').className = (meteo.main).toLowerCase()
+    console.log(meteo.main.toLowerCase())
+    console.log(meteo.meteo)
 
 
 }
@@ -76,20 +104,21 @@ let displayMeteoInfos = (meteo) => {
 let city = document.querySelector('#city')
 
 city.addEventListener('click', (e) => {
-
+    //rendre le span editable
     city.contentEditable = true
 
 })
 
 city.addEventListener('keydown', (e) => {
+    // keycode de la touche entrer
     if (e.keyCode == 13) {
         e.preventDefault()
         city.contentEditable = false
+        getMeteoInfos(false)
+
     }
 
 })
 
- getMeteoInfos()
+getMeteoInfos()
 
-// displayMeteoInfos(infos)
-// displayMeteoInfos()

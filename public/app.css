@@ -29,7 +29,6 @@ i.wi {
 }
 
 .tooltip{
-
     opacity: 0;
     position: absolute;
     top:0;
@@ -38,7 +37,6 @@ i.wi {
     border-radius: 5px;
     background-color: black;
     font-size: 12px;
-
     transition: opacity 0.5s, top 0.5s;
     /* border:2px solid greenyellow; */
 }
@@ -49,6 +47,6 @@ h1:hover .tooltip{
 
 
 .clear{background: url('img/clear.jpg');}
-.cloud{ background: url('img/cloud.jpg')  ;}
+.clouds{ background: url('img/cloud.jpg')  ;}
 .rain{background: url('img/rain.jpg'); }
 .snow{background: url('img/snow.jpg');}
