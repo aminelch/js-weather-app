@@ -7,7 +7,7 @@ const weathIcons = {
     'Snow': "wi wi-day-snow",
     'mist': "wi wi-day-fog",
     'Drizzle': "wi wi-day-sleet",
- }
+}
 /** IL FAUT :
   1 savoir l'addresse IP de visiteur
   2 contacter une API pour savoir la localisation de l'utilisateur
@@ -20,17 +20,16 @@ async function getMeteoInfos() {
     //savoir l'addresse IP de visiteur
     const ip = await fetch("http://api.ipify.org/?format=json").then(result => result.json())
         .then(data => data.ip)
-        .catch(error => console.error(error))
-
-    //102.170.33.120
-    const city = await fetch("http://api.ipapi.com/102.170.33.120?access_key=51c77fe51597ea20c5b170ea45b2555f")
-        .then(response => response.json)
-        .then(json =>json.ip)
-        .catch(error => console.error(error) )
+        .catch(error => console.log(error))
 
 
-        console.log(city)
+    const currentCity = await fetch(`http://ipinfo.io/${ip}?token=9218caedcca17b`)
+        .then(result => result.json())
+        .then(data => data.city)
+        .catch(error => console.log(error))
 
+    // console.log(ip)
+    console.log(currentCity)
 
 }
 
@@ -38,6 +37,22 @@ let displayMeteoInfos = (meteo) => {
     if (!(meteo instanceof Object)) throw 'Param must be an Object';
 
 }
+
+let city = document.querySelector('#city')
+
+city.addEventListener('click', (e) => {
+
+    city.contentEditable = true
+
+})
+
+city.addEventListener('keydown', (e) => {
+    if (e.keyCode == 13) {
+        e.preventDefault()
+        city.contentEditable = false
+    }
+
+})
 
 let infos = getMeteoInfos()
 
