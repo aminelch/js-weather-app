@@ -10,7 +10,7 @@ const weatherIcons = {
     'Drizzle': "wi wi-day-sleet",
 }
 /** IL FAUT :
-  1 savoir l'addresse IP de visiteur
+  1 savoir l'addressee IP de visiteur
   2 contacter une API pour savoir la localisation de l'utilisateur
   3 renvoyé la méteo
  */

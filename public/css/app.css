@@ -7,7 +7,8 @@ body {
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-position: center;
-    background-size: cover ;
+    background-repeat: no-repeat;
+    background-size: auto ;
     color:white;
 
 }
@@ -45,8 +46,22 @@ h1:hover .tooltip{
     top: -30px;
 }
 
+.author{
+    position: fixed;
+    bottom: 10px;
+    text-align: center;
+}
+.author a {
+    text-decoration: none;
+    opacity:.7;
+    color:inherit;
+    transition: opacity 0.3s;
+}
 
-.clear{background: url('img/clear.jpg');}
-.clouds{ background: url('img/cloud.jpg')  ;}
-.rain{background: url('img/rain.jpg'); }
-.snow{background: url('img/snow.jpg');}
+.author a:hover{
+    opacity:1;
+}
+.clear{background: url('../img/clear.jpg');}
+.clouds{ background: url('../img/cloud.jpg')  ;}
+.rain{background: url('../img/rain.jpg'); }
+.snow{background: url('../img/snow.jpg');}
