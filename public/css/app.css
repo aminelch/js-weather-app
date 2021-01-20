@@ -1,9 +1,5 @@
 body {
-    display:flex;
-    align-items: center ;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
+
     text-align: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-position: center;
@@ -11,6 +7,13 @@ body {
     background-size: auto ;
     color:white;
 
+}
+.wrapper{
+    display:flex;
+    align-items: center ;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
 }
 
 h1 {
@@ -50,6 +53,7 @@ h1:hover .tooltip{
     position: fixed;
     bottom: 10px;
     text-align: center;
+    text-shadow: rgb(0, 0, 0) 3px 1px 3px;
 }
 .author a {
     text-decoration: none;
@@ -57,9 +61,24 @@ h1:hover .tooltip{
     color:inherit;
     transition: opacity 0.3s;
 }
+.author::after{
+    content: '';
+    clear: both;
+}
 
 .author a:hover{
     opacity:1;
+}
+#test12{
+    /* display: static;
+    right: 110px; */
+
+
+    border-radius: 20px;
+    height: 64px;
+    width:64px;
+    border:3px solid #ffffff;
+    border-shadow
 }
 .clear{background: url('../img/clear.jpg');}
 .clouds{ background: url('../img/cloud.jpg')  ;}

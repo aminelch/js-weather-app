@@ -31,7 +31,7 @@ async function getMeteoInfos(withIp = true) {
     let weather, currentCity, openweatherURL
     if (withIp) {
 
-         currentCity = await fetch(`http://ipinfo.io/?token=9218caedcca17b`)
+         currentCity = await fetch(`https://ipinfo.io/?token=9218caedcca17b`)
             .then(result => result.json())
             .then(data => {
                 return { city: data.city, loc: data.loc } // on retourne un obj au lieu d'un item
@@ -42,7 +42,7 @@ async function getMeteoInfos(withIp = true) {
         const lon = currentCity.loc.substring(0, commaPosition)
         const lat = currentCity.loc.substring(commaPosition + 1, currentCity.loc.length)
 
-         openweatherURL = `http://api.openweathermap.org/data/2.5/weather?lat=${lon}&lon=${lat}&appid=${openweatherKey}&lang=fr&units=metric`
+         openweatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lon}&lon=${lat}&appid=${openweatherKey}&lang=fr&units=metric`
 
          weather = await fetch(openweatherURL)
         .then(result => result.json())
@@ -65,7 +65,7 @@ async function getMeteoInfos(withIp = true) {
         //recuperer la ville depuis la span city
         currentCity= document.querySelector('#city').textContent
 
-        openweatherURL=`http://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=${openweatherKey}&lang=fr&units=metric`
+        openweatherURL=`https://api.openweathermap.org/data/2.5/weather?q=${currentCity}&appid=${openweatherKey}&lang=fr&units=metric`
 
         weather = await fetch(openweatherURL)
        .then(result => result.json())
